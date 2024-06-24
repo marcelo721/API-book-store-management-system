@@ -46,6 +46,13 @@ public class TestConfig implements CommandLineRunner {
 
         authorRepository.save(author);
 
+        Author author2 = Author.builder()
+                .name("mark webert")
+                .nationality("americano")
+                .build();
+
+        authorRepository.save(author2);
+
 
         System.out.println("Done !");
     }
