@@ -4,7 +4,12 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
@@ -29,6 +34,22 @@ public class User {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @CreatedDate
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @LastModifiedDate
+    @Column(name = "modification_date")
+    private LocalDateTime modificationDate;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "modified_by")
+    private String modifiedBy;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)

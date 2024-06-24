@@ -34,6 +34,8 @@ public class TestConfig implements CommandLineRunner {
 
         userService.insert(user2);
 
+
+
         System.out.println("Done !");
     }
 }
