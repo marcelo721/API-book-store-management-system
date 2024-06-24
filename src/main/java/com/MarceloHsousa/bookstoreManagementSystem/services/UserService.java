@@ -2,6 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class UserService {
     public User findById(long id){
 
         Optional<User> obj = userRepository.findById(id);
-        return obj.orElseThrow((()-> new RuntimeException()));
+        return obj.orElseThrow((()-> new EntityNotFoundException("User Not Found")));
     }
 
     @Transactional(readOnly = true)
