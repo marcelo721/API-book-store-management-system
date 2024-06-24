@@ -10,12 +10,13 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
+@Entity
 public class User {
 
     @Id
