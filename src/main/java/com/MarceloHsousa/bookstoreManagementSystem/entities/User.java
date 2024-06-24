@@ -3,14 +3,11 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 
-
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
