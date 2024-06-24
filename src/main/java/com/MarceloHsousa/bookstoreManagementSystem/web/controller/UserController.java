@@ -6,11 +6,14 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
 
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.UserMapper;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserCreateDto;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserPasswordDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -27,9 +30,24 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById( @PathVariable long id){
+    public ResponseEntity<UserResponseDto> findById( @PathVariable long id){
         User user = service.findById(id);
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UserMapper.toDto(user));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserResponseDto>> findAll(){
+
+        List<User> users= service.findAll();
+        return ResponseEntity.ok(UserMapper.toListDto(users));
+    }
+
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordDto user){
+
+        User obj = service.updatePassword(user.getCurrentPassword(),user.getNewPassword(), user.getConfirmPassword(), id);
+        return ResponseEntity.noContent().build();
     }
 }
