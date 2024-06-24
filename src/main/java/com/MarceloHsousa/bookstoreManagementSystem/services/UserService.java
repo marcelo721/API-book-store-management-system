@@ -2,8 +2,10 @@ package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +20,13 @@ public class UserService {
 
     @Transactional
     public User insert(User user){
-        return userRepository.save(user);
+
+        try {
+            return userRepository.save(user);
+
+        }catch (DataIntegrityViolationException e){
+            throw new EmailUniqueViolationException(String.format("Email {%s} already registered ", user.getEmail()));
+        }
     }
 
     @Transactional(readOnly = true)
