@@ -13,14 +13,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
+@Entity
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-@Entity
 public class User implements Serializable {
 
     @Id
