@@ -34,8 +34,9 @@ public class Book {
     @Column(name = "isbn" , nullable = false)
     private String isbn;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private StatusBook statusBook;
+    private StatusBook statusBook = StatusBook.DISPONIVEL;
 
     @LastModifiedDate
     @Column(name = "modification_date")

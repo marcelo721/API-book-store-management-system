@@ -24,6 +24,6 @@ public class AuthorMapper {
     }
 
     public static List<AuthorResponseDto> toListDto(List <Author> authors){
-        return authors.stream().map(user -> toDto(user)).collect(Collectors.toList());
+        return authors.stream().map(author -> toDto(author)).collect(Collectors.toList());
     }
 }
