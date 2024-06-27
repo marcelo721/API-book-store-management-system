@@ -38,6 +38,12 @@ public class BookController {
         List<Book> books = service.findAll();
 
         return ResponseEntity.ok(BookMapper.toListDto(books));
+    }
 
+    @GetMapping("/byAuthor/{id}")
+    public ResponseEntity<List<BookResponseDto>> findBooksByAuthor(@PathVariable Long id) {
+        List<Book> books = service.findBooksByAuthor(id);
+
+        return ResponseEntity.ok(BookMapper.toListDto(books));
     }
 }

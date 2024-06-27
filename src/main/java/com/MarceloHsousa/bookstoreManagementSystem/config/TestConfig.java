@@ -46,7 +46,7 @@ public class TestConfig implements CommandLineRunner {
                         .build();
 
         Book book2 = Book.builder()
-                .title("game of thrones")
+                .title("i am the legend")
                 .description("game of thrones war is a very book")
                 .isbn("marcelin das netflix")
                 .build();
@@ -60,10 +60,14 @@ public class TestConfig implements CommandLineRunner {
 
 
         book.setAuthor(author);
+        book2.setAuthor(author);
         author.getBooks().add(book);
+        author.getBooks().add(book2);
 
         authorRepository.save(author);
         bookService.insert(book);
+        bookService.insert(book2);
+
 
         System.out.println(author.getBooks());
 
