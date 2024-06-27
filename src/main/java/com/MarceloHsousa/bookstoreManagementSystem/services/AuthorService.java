@@ -1,6 +1,7 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class AuthorService {
 
     private final AuthorRepository repository;
+
+    private final BookService bookService;
 
     @Transactional
     public Author insert(Author author){
@@ -32,4 +35,5 @@ public class AuthorService {
     public List<Author> findAll(){
         return repository.findAll();
     }
+
 }

@@ -1,13 +1,9 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import org.modelmapper.ModelMapper;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.stream.Collectors;

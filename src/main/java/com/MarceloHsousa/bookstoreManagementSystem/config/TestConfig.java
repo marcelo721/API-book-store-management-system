@@ -1,11 +1,12 @@
 package com.MarceloHsousa.bookstoreManagementSystem.config;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.services.BookService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +19,12 @@ public class TestConfig implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
 
+    private final BookService bookService;
+
     @Override
     public void run(String... args) throws Exception {
 
+        //create new user
         User user = User.builder()
                 .email("Marcelo@email.com")
                 .name("marcelo")
@@ -28,31 +32,37 @@ public class TestConfig implements CommandLineRunner {
                 .role(Role.CLIENT)
                 .build();
 
-        userService.insert(user);
-
-        User user2 = User.builder()
-                .email("Marcelinho@email.com")
-                .name("marcelo")
-                .password("12345678")
-                .role(Role.CLIENT)
-                .build();
-
-        userService.insert(user2);
-
+        //create new author
         Author author = Author.builder()
                 .name("Marcelo henrique de sousa")
                 .nationality("americano")
                 .build();
 
-        authorRepository.save(author);
+        //create new book
+        Book book = Book.builder()
+                        .title("game of thrones")
+                        .description("game of thrones war is a very book")
+                        .isbn("marcelin das netflix")
+                        .build();
 
+        Book book2 = Book.builder()
+                .title("game of thrones")
+                .description("game of thrones war is a very book")
+                .isbn("marcelin das netflix")
+                .build();
+
+        //create new author
         Author author2 = Author.builder()
-                .name("mark webert")
+                .name("Marcelo henrique de sousa")
                 .nationality("americano")
                 .build();
 
-        authorRepository.save(author2);
 
+
+        book.setAuthor(author);
+        author.getBooks().add(book);
+        authorRepository.save(author);
+        bookService.insert(book);
 
         System.out.println("Done !");
     }

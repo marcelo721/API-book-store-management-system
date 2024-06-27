@@ -2,6 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusBook;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -9,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table(name = "books")
 @Builder
 public class Book {
@@ -36,7 +40,12 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private StatusBook statusBook = StatusBook.DISPONIVEL;
+    @Builder.Default
+    private StatusBook statusBook = StatusBook.INDISPONIVEL;
+
+    @JoinColumn(name = "author_id", nullable = false)
+    @ManyToOne
+    private Author author;
 
     @LastModifiedDate
     @Column(name = "modification_date")
@@ -49,10 +58,6 @@ public class Book {
     @LastModifiedBy
     @Column(name = "modified_by")
     private String modifiedBy;
-
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.CLIENT;
 
     @Override
     public boolean equals(Object o) {
