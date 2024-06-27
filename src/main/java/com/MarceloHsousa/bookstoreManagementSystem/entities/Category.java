@@ -3,6 +3,8 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,10 @@ public class Category {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Builder.Default
+    @ManyToMany
+    private List<Book> books = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

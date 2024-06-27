@@ -61,8 +61,12 @@ public class TestConfig implements CommandLineRunner {
 
         book.setAuthor(author);
         author.getBooks().add(book);
+
         authorRepository.save(author);
         bookService.insert(book);
+
+        System.out.println(author.getBooks());
+
 
         System.out.println("Done !");
     }

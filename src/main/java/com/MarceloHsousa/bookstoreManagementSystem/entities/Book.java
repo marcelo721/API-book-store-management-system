@@ -47,6 +47,11 @@ public class Book {
     @ManyToOne
     private Author author;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Builder.Default
+    @JsonIgnore
+    private List<Category> categories = new ArrayList<>();
+
     @LastModifiedDate
     @Column(name = "modification_date")
     private LocalDateTime modificationDate;
