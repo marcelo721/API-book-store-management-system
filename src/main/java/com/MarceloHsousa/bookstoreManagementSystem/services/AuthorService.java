@@ -4,7 +4,9 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,6 @@ public class AuthorService {
 
     private final AuthorRepository repository;
 
-    private final BookService bookService;
 
     @Transactional
     public Author insert(Author author){
@@ -36,4 +37,14 @@ public class AuthorService {
         return repository.findAll();
     }
 
+    @Transactional
+    public void delete(Long id){
+        try {
+            Author author = findById(id);
+            repository.deleteById(author.getId());
+
+        }catch (DataIntegrityViolationException e){
+            throw  new IntegrityViolationException("Error !" + e.getMessage());
+        }
+    }
 }

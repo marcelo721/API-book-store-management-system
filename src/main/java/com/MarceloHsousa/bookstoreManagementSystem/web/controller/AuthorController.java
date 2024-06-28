@@ -6,6 +6,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreat
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.service.spi.ServiceException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,16 @@ public class AuthorController {
         List<Author> authors = service.findAll();
 
         return ResponseEntity.ok(AuthorMapper.toListDto(authors));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable  Long id){
+
+        try {
+            service.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
