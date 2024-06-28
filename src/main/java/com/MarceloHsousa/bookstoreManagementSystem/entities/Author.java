@@ -39,7 +39,8 @@ public class Author implements Serializable {
     private String nationality;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
+            fetch = FetchType.EAGER)
     @Builder.Default
     private List<Book> books = new ArrayList<>();
 

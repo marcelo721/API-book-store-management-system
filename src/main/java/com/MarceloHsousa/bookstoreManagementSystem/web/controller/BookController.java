@@ -2,6 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.services.BookService;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.BookMapper;
@@ -65,6 +66,8 @@ public class BookController {
             return ResponseEntity.noContent().build();
         } catch (DataIntegrityViolationException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }catch (EntityNotFoundException e){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
