@@ -1,9 +1,11 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,16 @@ public class UserService {
 
         user.setPassword(newPassword);
         return user;
+    }
 
+    @Transactional
+    public void delete(Long id){
+        try {
+            User user = findById(id);
+            userRepository.deleteById(user.getId());
+
+        }catch (DataIntegrityViolationException e){
+            throw  new IntegrityViolationException("Error !" + e.getMessage());
+        }
     }
 }
