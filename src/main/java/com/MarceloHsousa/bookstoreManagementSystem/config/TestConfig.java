@@ -2,10 +2,12 @@ package com.MarceloHsousa.bookstoreManagementSystem.config;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.BookService;
+import com.MarceloHsousa.bookstoreManagementSystem.services.CategoryService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +22,8 @@ public class TestConfig implements CommandLineRunner {
     private final AuthorRepository authorRepository;
 
     private final BookService bookService;
+
+    private final CategoryService  categoryService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -57,16 +61,24 @@ public class TestConfig implements CommandLineRunner {
                 .nationality("americano")
                 .build();
 
+        //create new category
+        Category category = Category.builder()
+                .name("action")
+                .description("movies").build();
 
-
+        book.getCategories().add(category);
+        category.getBooks().add(book);
         book.setAuthor(author);
         book2.setAuthor(author);
         author.getBooks().add(book);
         author.getBooks().add(book2);
 
+
         authorRepository.save(author);
         bookService.insert(book);
         bookService.insert(book2);
+        categoryService.insert(category);
+
 
 
         System.out.println(author.getBooks());

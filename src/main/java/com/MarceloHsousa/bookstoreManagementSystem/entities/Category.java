@@ -2,6 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.EnableMBeanExport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class Category {
 
     @Builder.Default
     @ManyToMany
+    @JoinTable(
+            name = "categories_books",
+            joinColumns = @JoinColumn(name = "category_fk"),
+            inverseJoinColumns = @JoinColumn(name = "book_fk")
+    )
     private List<Book> books = new ArrayList<>();
 
     @Override

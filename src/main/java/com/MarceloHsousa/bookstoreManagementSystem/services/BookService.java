@@ -37,4 +37,9 @@ public class BookService {
     public List<Book> findBooksByAuthor(Long id){
         return repository.findByAuthorId(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Book> findBooksByCategoryId(Long id){
+        return repository.findBooksByCategoryId(id);
+    }
 }

@@ -46,4 +46,11 @@ public class BookController {
 
         return ResponseEntity.ok(BookMapper.toListDto(books));
     }
+
+    @GetMapping("/byCategory/{id}")
+    public ResponseEntity<List<BookResponseDto>> findBooksByCategory(@PathVariable Long id) {
+        List<Book> books = service.findBooksByCategoryId(id);
+
+        return ResponseEntity.ok(BookMapper.toListDto(books));
+    }
 }

@@ -47,7 +47,7 @@ public class Book {
     @ManyToOne
     private Author author;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "books")
     @Builder.Default
     @JsonIgnore
     private List<Category> categories = new ArrayList<>();
