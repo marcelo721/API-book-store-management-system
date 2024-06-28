@@ -3,6 +3,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.services.CategoryService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 
@@ -52,7 +53,7 @@ public class CategoryController {
             service.delete(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
-        }catch (DataIntegrityViolationException e){
+        }catch (IntegrityViolationException e){
             log.error("Error !");
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }catch (EntityNotFoundException e){

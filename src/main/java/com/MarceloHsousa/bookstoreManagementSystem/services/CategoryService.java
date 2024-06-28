@@ -41,9 +41,9 @@ public class CategoryService {
 
         try {
             Category category = findById(id);
-            for (Book book : category.getBooks()){
-                book.getCategories().clear();
-            }
+
+            if (!category.getBooks().isEmpty())
+                throw new IntegrityViolationException("Cannot delete categories with associated books");
             repository.delete(category);
 
         }catch (DataIntegrityViolationException e){

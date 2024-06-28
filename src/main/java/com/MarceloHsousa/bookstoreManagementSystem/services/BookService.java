@@ -71,22 +71,18 @@ public class BookService {
     public void delete(Long id) {
         try {
             Book book = findById(id);
-            Author author = book.getAuthor();
 
-            Set<Category> categories = book.getCategories();
+            if(!book.getCategories().isEmpty())
+                throw new IntegrityViolationException("Cannot delete books with associated categories");
+
+            Author author = book.getAuthor();
 
             Book bookToRemove = author.getBooks().stream()
                     .filter(obj -> Objects.equals(obj.getId(), id))
                     .findFirst()
                     .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
 
-
-            for (Category category : categories){
-                category.getBooks().clear();
-            }
-
             author.getBooks().remove(bookToRemove);
-            book.getCategories().clear();
 
             repository.deleteById(id);
 
