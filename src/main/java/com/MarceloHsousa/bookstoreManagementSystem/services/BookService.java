@@ -90,4 +90,8 @@ public class BookService {
             throw new IntegrityViolationException("Error! " + e.getMessage());
         }
     }
+
+    @Transactional
+    public void removeCategoryById(Long id){
+    }
 }

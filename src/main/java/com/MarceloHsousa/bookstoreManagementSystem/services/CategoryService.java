@@ -1,6 +1,5 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
@@ -49,5 +48,9 @@ public class CategoryService {
         }catch (DataIntegrityViolationException e){
             throw  new IntegrityViolationException("Error !, you can not do this resource"+ e.getMessage());
         }
+    }
+
+    @Transactional
+    public void RemoveBookById(Long id){
     }
 }
