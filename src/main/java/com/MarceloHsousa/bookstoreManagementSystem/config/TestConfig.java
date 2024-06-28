@@ -74,9 +74,6 @@ public class TestConfig implements CommandLineRunner {
         author.getBooks().add(book2);
 
 
-        System.out.println(author.getBooks());
-
-
         System.out.println("Done !");
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,12 +73,20 @@ public class BookService {
             Book book = findById(id);
             Author author = book.getAuthor();
 
+            Set<Category> categories = book.getCategories();
+
             Book bookToRemove = author.getBooks().stream()
                     .filter(obj -> Objects.equals(obj.getId(), id))
                     .findFirst()
                     .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
 
+
+            for (Category category : categories){
+                category.getBooks().clear();
+            }
+
             author.getBooks().remove(bookToRemove);
+            book.getCategories().clear();
 
             repository.deleteById(id);
 

@@ -1,9 +1,12 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +34,20 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<Category> findAll() {
         return repository.findAll();
+    }
+
+    @Transactional
+    public void delete(Long id){
+
+        try {
+            Category category = findById(id);
+            for (Book book : category.getBooks()){
+                book.getCategories().clear();
+            }
+            repository.delete(category);
+
+        }catch (DataIntegrityViolationException e){
+            throw  new IntegrityViolationException("Error !, you can not do this resource"+ e.getMessage());
+        }
     }
 }
