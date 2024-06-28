@@ -23,5 +23,4 @@ public class BookResponseDto {
     private Long id;
     private AuthorResponseBookDto author;
     private List<CategoryResponseBookDto> categories;
-
 }

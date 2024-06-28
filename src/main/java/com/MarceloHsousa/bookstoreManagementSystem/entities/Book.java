@@ -10,9 +10,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -47,10 +45,15 @@ public class Book {
     @ManyToOne
     private Author author;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "books")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "categories_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     @Builder.Default
     @JsonIgnore
-    private List<Category> categories = new ArrayList<>();
+    private Set<Category> categories = new HashSet<>();
 
     @LastModifiedDate
     @Column(name = "modification_date")

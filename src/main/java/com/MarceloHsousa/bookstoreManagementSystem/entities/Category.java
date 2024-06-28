@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.EnableMBeanExport;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
@@ -14,7 +12,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "category")
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -28,13 +26,8 @@ public class Category {
     private String description;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "categories_books",
-            joinColumns = @JoinColumn(name = "category_fk"),
-            inverseJoinColumns = @JoinColumn(name = "book_fk")
-    )
-    private List<Book> books = new ArrayList<>();
+    @ManyToMany(mappedBy = "categories")
+    private Set<Book> books = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
