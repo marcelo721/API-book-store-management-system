@@ -7,14 +7,13 @@ import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -66,4 +65,25 @@ public class BookService {
     public List<Book> findBooksByCategoryId(Long id){
         return repository.findBooksByCategoryId(id);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        try {
+            Book book = findById(id);
+            Author author = book.getAuthor();
+
+            Book bookToRemove = author.getBooks().stream()
+                    .filter(obj -> Objects.equals(obj.getId(), id))
+                    .findFirst()
+                    .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+
+            author.getBooks().remove(bookToRemove);
+
+            repository.deleteById(id);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new IntegrityViolationException("Error! " + e.getMessage());
+        }
+    }
+
 }

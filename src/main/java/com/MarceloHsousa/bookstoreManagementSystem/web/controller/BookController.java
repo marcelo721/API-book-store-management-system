@@ -6,6 +6,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookCreateDto
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.BookMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/books")
+@Slf4j
 public class BookController {
 
     private final BookService service;
@@ -52,5 +55,16 @@ public class BookController {
         List<Book> books = service.findBooksByCategoryId(id);
 
         return ResponseEntity.ok(BookMapper.toListDto(books));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable  Long id){
+
+        try {
+            service.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }

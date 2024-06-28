@@ -74,13 +74,6 @@ public class TestConfig implements CommandLineRunner {
         author.getBooks().add(book2);
 
 
-        //authorRepository.save(author);
-        //bookService.insert(book);
-        //bookService.insert(book2);
-        //categoryService.insert(category);
-
-
-
         System.out.println(author.getBooks());
 
 
