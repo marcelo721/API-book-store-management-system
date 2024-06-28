@@ -39,7 +39,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     @Builder.Default
-    private StatusBook statusBook = StatusBook.INDISPONIVEL;
+    private StatusBook statusBook = StatusBook.AVAILABLE;
 
     @JoinColumn(name = "author_id", nullable = false)
     @ManyToOne
