@@ -49,8 +49,4 @@ public class CategoryService {
             throw  new IntegrityViolationException("Error !, you can not do this resource"+ e.getMessage());
         }
     }
-
-    @Transactional
-    public void RemoveBookById(Long id){
-    }
 }

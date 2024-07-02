@@ -71,4 +71,12 @@ public class BookController {
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @DeleteMapping("/{bookId}/categories/{categoryId}")
+    public ResponseEntity<Void> deleteCategoryFromBook(@PathVariable Long bookId, @PathVariable Long categoryId){
+
+        service.removeCategoryFromBook(categoryId, bookId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

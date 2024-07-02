@@ -22,22 +22,20 @@ public class BookService {
 
     private final BookRepository repository;
 
-    private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @Transactional
     public Book insert(Book book){
 
-        Author author = authorRepository.findById(book.getAuthor().getId())
-                .orElseThrow((()-> new EntityNotFoundException("Author not found!")));
+        Author author = authorService.findById(book.getAuthor().getId());
         book.setAuthor(author);
 
         Set<Category> categories  = new HashSet<>();
 
         for (Category category : book.getCategories()){
-            Category obj = categoryRepository.findById(category.getId())
-                    .orElseThrow((()-> new EntityNotFoundException("Category not found!")));
+            Category obj = categoryService.findById(category.getId());
 
             categories.add(obj);
         }
@@ -92,6 +90,14 @@ public class BookService {
     }
 
     @Transactional
-    public void removeCategoryById(Long id){
+    public void removeCategoryFromBook(Long idCategory, Long idBook){
+
+        Book book = findById(idBook);
+        Category category = categoryService.findById(idCategory);
+
+        if(book.getCategories().contains(category)){
+            book.getCategories().remove(category);
+            category.getBooks().remove(book);
+        }
     }
 }
