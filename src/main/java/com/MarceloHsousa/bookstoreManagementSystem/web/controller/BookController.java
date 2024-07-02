@@ -7,6 +7,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.Integrity
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.BookMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,7 +26,7 @@ public class BookController {
     private final BookService service;
 
     @PatchMapping
-    public ResponseEntity<BookResponseDto> insert(@RequestBody BookCreateDto dto) {
+    public ResponseEntity<BookResponseDto> insert(@Valid @RequestBody BookCreateDto dto) {
 
         Book book = service.insert(BookMapper.toBook(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(BookMapper.toDto(book));

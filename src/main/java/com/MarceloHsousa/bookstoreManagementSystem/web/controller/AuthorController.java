@@ -3,13 +3,12 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,7 @@ public class AuthorController {
     private final AuthorService service;
 
     @PatchMapping
-    public ResponseEntity<AuthorResponseDto> insert(@RequestBody AuthorCreateDto dto){
+    public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto){
 
         Author author = service.insert(AuthorMapper.toAuthor(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(AuthorMapper.toDto(author));

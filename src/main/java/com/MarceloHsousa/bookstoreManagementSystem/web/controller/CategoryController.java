@@ -8,6 +8,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryC
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,7 +27,7 @@ public class CategoryController {
     private final CategoryService service;
 
     @PatchMapping
-    public ResponseEntity<CategoryResponseDto> insert(@RequestBody CategoryCreateDto dto){
+    public ResponseEntity<CategoryResponseDto> insert(@Valid @RequestBody CategoryCreateDto dto){
 
         Category obj = service.insert(CategoryMapper.toCategory(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CategoryMapper.toDto(obj));
