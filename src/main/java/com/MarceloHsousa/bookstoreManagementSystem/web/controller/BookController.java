@@ -62,15 +62,8 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
-
-        try {
             service.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (IntegrityViolationException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }catch (EntityNotFoundException e){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
     }
 
     @DeleteMapping("/{bookId}/categories/{categoryId}")

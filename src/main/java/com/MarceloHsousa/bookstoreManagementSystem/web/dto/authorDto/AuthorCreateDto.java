@@ -1,7 +1,9 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto;
 
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +21,7 @@ public class AuthorCreateDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     @Past
     private LocalDate birthDate;
 

@@ -39,12 +39,16 @@ public class AuthorService {
 
     @Transactional
     public void delete(Long id){
-        try {
             Author author = findById(id);
+
+            if (!author.getBooks().isEmpty())
+                throw new IntegrityViolationException("Error, these authors are associated with some books");
             repository.deleteById(author.getId());
 
-        }catch (DataIntegrityViolationException e){
-            throw  new IntegrityViolationException("Error !" + e.getMessage());
-        }
+    }
+
+    @Transactional
+    public void removeBookFromAuthor(){
+
     }
 }

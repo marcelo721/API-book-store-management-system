@@ -4,6 +4,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseBookDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class BookCreateDto {
     @NotBlank
     private String isbn;
 
-    @NotBlank
+    @NotNull
     private Author author;
 
     private List<Category> categories;

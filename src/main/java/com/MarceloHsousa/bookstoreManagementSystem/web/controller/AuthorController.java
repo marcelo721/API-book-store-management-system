@@ -47,15 +47,7 @@ public class AuthorController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
-
-        try {
             service.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (DataIntegrityViolationException e){
-            log.error("Error!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }catch (EntityNotFoundException e){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
     }
 }
