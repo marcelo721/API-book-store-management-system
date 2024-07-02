@@ -6,6 +6,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordInvalidException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -47,13 +48,13 @@ public class UserService {
     public User updatePassword(String currentPassword, String newPassword, String confirmNewPassword, long id){
 
         if (!newPassword.equals(confirmNewPassword)){
-            throw new RuntimeException("deu ruim ");
+            throw new PasswordInvalidException("the confirmation passwords are different");
         }
 
         User user = findById(id);
 
         if (!currentPassword.equals(user.getPassword())){
-            throw  new RuntimeException("fudeo");
+            throw  new PasswordInvalidException("The password is wrong");
         }
 
         user.setPassword(newPassword);
