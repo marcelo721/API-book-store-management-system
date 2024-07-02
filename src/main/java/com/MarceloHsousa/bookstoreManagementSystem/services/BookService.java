@@ -6,6 +6,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,17 @@ public class BookService {
             book.getCategories().remove(category);
             category.getBooks().remove(book);
         }
+    }
+    @Transactional
+    public Book updateBook(BookUpdateDto book, Long id){
+        Book obj = repository.getReferenceById(id);
+
+        updateData(book, obj);
+        return repository.save(obj);
+    }
+
+    private void updateData(BookUpdateDto book, Book obj){
+        obj.setDescription(book.getDescription());
+        obj.setTitle(book.getTitle());
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookCreateDto {
 
-    @NotBlank()
+    @NotBlank
     private String title;
 
     @NotBlank

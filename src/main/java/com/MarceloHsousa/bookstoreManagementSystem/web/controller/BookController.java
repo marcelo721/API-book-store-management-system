@@ -2,15 +2,13 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.services.BookService;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.BookMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +69,13 @@ public class BookController {
 
         service.removeCategoryFromBook(categoryId, bookId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponseDto> updateBook(@PathVariable Long id, @RequestBody BookUpdateDto dto){
+
+        Book book = service.updateBook(dto, id);
+        return ResponseEntity.ok(BookMapper.toDto(book));
     }
 
 }

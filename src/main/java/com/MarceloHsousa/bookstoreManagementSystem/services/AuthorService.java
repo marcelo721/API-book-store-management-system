@@ -44,11 +44,6 @@ public class AuthorService {
             if (!author.getBooks().isEmpty())
                 throw new IntegrityViolationException("Error, these authors are associated with some books");
             repository.deleteById(author.getId());
-
     }
 
-    @Transactional
-    public void removeBookFromAuthor(){
-
-    }
 }
