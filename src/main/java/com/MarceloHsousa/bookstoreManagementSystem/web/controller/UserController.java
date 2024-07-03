@@ -49,6 +49,8 @@ public class UserController {
     )
     @PostMapping
     public ResponseEntity<UserResponseDto> insert(@Valid @RequestBody UserCreateDto dto){
+
+        log.info("Creating new user with email: {}", dto.getEmail());
         User obj = service.insert(UserMapper.toUser(dto));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(obj));
@@ -66,6 +68,8 @@ public class UserController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> findById( @PathVariable long id){
+
+        log.info("Fetching user with id: {}", id);
         User user = service.findById(id);
 
         return ResponseEntity.ok(UserMapper.toDto(user));
@@ -82,6 +86,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAll(){
 
+        log.info("Fetching all users");
         List<User> users= service.findAll();
         return ResponseEntity.ok(UserMapper.toListDto(users));
     }
@@ -101,8 +106,9 @@ public class UserController {
             }
     )
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordDto user){
+    public ResponseEntity<Void> updatePassword( @Valid @PathVariable Long id, @RequestBody UserPasswordDto user){
 
+        log.info("Updating password for user with id: {}", id);
         User obj = service.updatePassword(user.getCurrentPassword(),user.getNewPassword(), user.getConfirmPassword(), id);
         return ResponseEntity.noContent().build();
     }
@@ -122,7 +128,8 @@ public class UserController {
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-            service.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        log.info("Deleting user with id: {}", id);
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
