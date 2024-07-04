@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.List;
 @RequestMapping("api/v1/categories")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "categories", description = "contains all category resources")
 public class CategoryController {
 
     private final CategoryService service;
@@ -34,7 +36,7 @@ public class CategoryController {
             summary = "Create a new category", description = "resource to create a new Category",
             responses = {
                     @ApiResponse(responseCode = "201", description = "resource created successfully",
-                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid Data",
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
@@ -52,7 +54,7 @@ public class CategoryController {
             summary = "find category by id", description = "resource to find category by id ",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Category Found Successfully",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
 
                     @ApiResponse(responseCode = "404", description = "Category not found !",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
@@ -68,9 +70,9 @@ public class CategoryController {
     @Operation(
             summary = "Find all categories", description = "Resource to find all categories",
             responses = {
-                    @ApiResponse(responseCode = "200",description = "List of all registered users",
+                    @ApiResponse(responseCode = "200",description = "List of all registered categories",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = CategoryResponseDto.class))))
             }
     )
     @GetMapping

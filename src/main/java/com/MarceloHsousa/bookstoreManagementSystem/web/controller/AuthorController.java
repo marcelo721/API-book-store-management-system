@@ -3,9 +3,17 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
+import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +28,21 @@ import java.util.List;
 @RequestMapping("api/v1/authors")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "authors", description = "Contains all author resources")
 public class AuthorController {
 
     private final AuthorService service;
 
+    @Operation(
+            summary = "Create new Author", description = "resource to create a new author",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "resource to create a new Category",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
+
+                    @ApiResponse(responseCode = "422", description = "Invalid Data",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @PatchMapping
     public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto){
 
@@ -31,6 +50,17 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(AuthorMapper.toDto(author));
     }
 
+
+    @Operation(
+            summary = "find author by id", description = "resource to find author by id ",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "author Found Successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
+
+                    @ApiResponse(responseCode = "404", description = "author not found !",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<AuthorResponseDto> findById(@PathVariable Long id){
         Author author = service.findById(id);
@@ -38,6 +68,15 @@ public class AuthorController {
         return ResponseEntity.ok(AuthorMapper.toDto(author));
     }
 
+
+    @Operation(
+            summary = "Find all authors", description = "Resource to find all authors",
+            responses = {
+                    @ApiResponse(responseCode = "200",description = "List of all registered authors",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = AuthorResponseDto.class))))
+            }
+    )
     @GetMapping
     public ResponseEntity<List<AuthorResponseDto>> findAll(){
         List<Author> authors = service.findAll();
@@ -45,6 +84,20 @@ public class AuthorController {
         return ResponseEntity.ok(AuthorMapper.toListDto(authors));
     }
 
+
+    @Operation(
+            summary = "delete author by id", description = "Resource to delete a author",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "author deleted successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+
+                    @ApiResponse(responseCode = "404", description = "author Not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "409", description = "this resource is associated with another resource",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
             service.delete(id);
