@@ -27,7 +27,7 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+
         User user = User.builder()
                 .email("marceloHenrique@gmail.com")
                .name("marcelo henrique de sousa")
