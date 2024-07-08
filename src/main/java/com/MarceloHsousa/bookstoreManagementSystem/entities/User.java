@@ -53,6 +53,7 @@ public class User implements Serializable {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Role role = Role.CLIENT;
 
     @Override
