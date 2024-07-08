@@ -1,6 +1,5 @@
 package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +7,6 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -27,17 +25,17 @@ import java.util.Objects;
 public class Author implements Serializable {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 40)
     private String name;
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name = "nationality")
+    @Column(name = "nationality", nullable = false)
     private String nationality;
 
     @JsonIgnore
@@ -68,7 +66,6 @@ public class Author implements Serializable {
         if (!(o instanceof Author author)) return false;
         return getId().equals(author.getId());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getId());

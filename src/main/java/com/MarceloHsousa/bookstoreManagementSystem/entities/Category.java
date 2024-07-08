@@ -2,8 +2,13 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.EnableMBeanExport;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -13,7 +18,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,22 @@ public class Category {
     @Builder.Default
     @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new HashSet<>();
+
+    @CreatedDate
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @LastModifiedDate
+    @Column(name = "modification_date")
+    private LocalDateTime modificationDate;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "modified_by")
+    private String modifiedBy;
 
     @Override
     public boolean equals(Object o) {

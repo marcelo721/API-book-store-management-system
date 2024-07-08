@@ -2,8 +2,6 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
@@ -17,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,13 +40,12 @@ public class AuthorController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
-    @PatchMapping
+    @PostMapping
     public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto){
 
         Author author = service.insert(AuthorMapper.toAuthor(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(AuthorMapper.toDto(author));
     }
-
 
     @Operation(
             summary = "find author by id", description = "resource to find author by id ",

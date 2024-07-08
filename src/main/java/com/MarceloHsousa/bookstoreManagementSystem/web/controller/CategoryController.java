@@ -5,8 +5,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.CategoryService;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -43,7 +43,7 @@ public class CategoryController {
 
             }
     )
-    @PatchMapping
+    @PostMapping
     public ResponseEntity<CategoryResponseDto> insert(@Valid @RequestBody CategoryCreateDto dto){
 
         Category obj = service.insert(CategoryMapper.toCategory(dto));
@@ -101,4 +101,12 @@ public class CategoryController {
             service.delete(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponseDto> update(@PathVariable Long id, @RequestBody CategoryUpdateDto updateCategory){
+
+        Category category = service.update(updateCategory, id);
+        return ResponseEntity.ok(CategoryMapper.toDto(category));
+    }
+
 }

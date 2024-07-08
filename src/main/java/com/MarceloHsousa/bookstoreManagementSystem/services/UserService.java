@@ -6,6 +6,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniq
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordInvalidException;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,18 @@ public class UserService {
         }catch (DataIntegrityViolationException e){
             throw  new IntegrityViolationException("Error !" + e.getMessage());
         }
+    }
+
+    @Transactional
+    public User updateEmail(Long idUser, UserUpdateDto userUpdate){
+        return null;
+    }
+
+    @Transactional
+    public User updateName(Long idUser, UserUpdateDto userUpdate){
+        return null;
+    }
+
+    private void UpdateData(User user, UserUpdateDto userUpdate){
     }
 }

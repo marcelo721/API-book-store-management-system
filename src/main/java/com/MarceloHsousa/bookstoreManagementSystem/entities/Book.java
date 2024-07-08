@@ -1,14 +1,15 @@
 package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusBook;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,7 +21,7 @@ import java.util.*;
 @ToString
 @Table(name = "books")
 @Builder
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +55,10 @@ public class Book {
     @Builder.Default
     @JsonIgnore
     private Set<Category> categories = new HashSet<>();
+
+    @CreatedDate
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
 
     @LastModifiedDate
     @Column(name = "modification_date")

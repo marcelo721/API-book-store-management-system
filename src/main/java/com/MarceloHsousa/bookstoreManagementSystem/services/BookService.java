@@ -13,16 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BookService {
 
     private final BookRepository repository;
-
     private final AuthorService authorService;
-
     private final CategoryService categoryService;
 
     @Transactional
@@ -35,7 +32,6 @@ public class BookService {
 
         for (Category category : book.getCategories()){
             Category obj = categoryService.findById(category.getId());
-
             categories.add(obj);
         }
 

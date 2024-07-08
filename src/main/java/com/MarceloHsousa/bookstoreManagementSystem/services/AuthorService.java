@@ -1,12 +1,10 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +17,6 @@ public class AuthorService {
 
     private final AuthorRepository repository;
 
-
     @Transactional
     public Author insert(Author author){
         return repository.save(author);
@@ -28,7 +25,6 @@ public class AuthorService {
     @Transactional(readOnly = true)
     public Author findById(Long id){
         Optional<Author> obj = repository.findById(id);
-
         return obj.orElseThrow((() -> new EntityNotFoundException("Author not found")));
     }
 
@@ -45,5 +41,4 @@ public class AuthorService {
                 throw new IntegrityViolationException("Error, these authors are associated with some books");
             repository.deleteById(author.getId());
     }
-
 }

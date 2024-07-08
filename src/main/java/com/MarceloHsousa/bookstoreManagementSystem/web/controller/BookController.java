@@ -39,7 +39,7 @@ public class BookController {
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
-    @PatchMapping
+    @PostMapping
     public ResponseEntity<BookResponseDto> insert(@Valid @RequestBody BookCreateDto dto) {
 
         Book book = service.insert(BookMapper.toBook(dto));
@@ -146,7 +146,6 @@ public class BookController {
     )
     @DeleteMapping("/{bookId}/categories/{categoryId}")
     public ResponseEntity<Void> deleteCategoryFromBook(@PathVariable Long bookId, @PathVariable Long categoryId){
-
         service.removeCategoryFromBook(categoryId, bookId);
         return ResponseEntity.noContent().build();
     }
