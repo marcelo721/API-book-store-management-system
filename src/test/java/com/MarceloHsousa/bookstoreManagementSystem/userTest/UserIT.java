@@ -1,4 +1,4 @@
-package com.MarceloHsousa.bookstoreManagementSystem.test;
+package com.MarceloHsousa.bookstoreManagementSystem.userTest;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserCreateDto;
