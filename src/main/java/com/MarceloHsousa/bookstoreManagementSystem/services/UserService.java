@@ -73,15 +73,13 @@ public class UserService {
     }
 
     @Transactional
-    public User updateEmail(Long idUser, UserUpdateDto userUpdate){
-        return null;
-    }
-
-    @Transactional
     public User updateName(Long idUser, UserUpdateDto userUpdate){
-        return null;
-    }
+        User user = findById(idUser);
 
-    private void UpdateData(User user, UserUpdateDto userUpdate){
+        if (!user.getPassword().equals(userUpdate.getPassword()))
+            throw new PasswordInvalidException("password is wrong!");
+
+        user.setName(userUpdate.getName());
+        return userRepository.save(user);
     }
 }

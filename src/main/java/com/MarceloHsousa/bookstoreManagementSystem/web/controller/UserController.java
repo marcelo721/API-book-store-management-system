@@ -8,6 +8,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.UserMapper;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserPasswordDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -105,7 +106,7 @@ public class UserController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updatePassword( @Valid @PathVariable Long id, @RequestBody UserPasswordDto user){
 
         log.info("Updating password for user with id: {}", id);
@@ -131,5 +132,12 @@ public class UserController {
         log.info("Deleting user with id: {}", id);
         service.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/update/{idUser}")
+    public ResponseEntity<UserResponseDto> updateName(@PathVariable Long idUser, @RequestBody UserUpdateDto userUpdateDto){
+        User user = service.updateName(idUser, userUpdateDto);
+
+        return ResponseEntity.ok().body(UserMapper.toDto(user));
     }
 }
