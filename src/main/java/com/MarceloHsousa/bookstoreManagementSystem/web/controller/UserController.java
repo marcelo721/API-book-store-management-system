@@ -107,7 +107,7 @@ public class UserController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePassword( @Valid @PathVariable Long id, @RequestBody UserPasswordDto user){
+    public ResponseEntity<Void> updatePassword( @PathVariable Long id,  @Valid @RequestBody UserPasswordDto user){
 
         log.info("Updating password for user with id: {}", id);
         User obj = service.updatePassword(user.getCurrentPassword(),user.getNewPassword(), user.getConfirmPassword(), id);
@@ -134,8 +134,26 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+
+    @Operation(
+            summary = "Update name", description = "resource to update username",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "resource created successfully",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+
+
+                    @ApiResponse(responseCode = "422", description = "Invalid Data",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "404", description = "User Not Found",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+
+            }
+    )
     @PutMapping("/update/{idUser}")
-    public ResponseEntity<UserResponseDto> updateName(@PathVariable Long idUser, @RequestBody UserUpdateDto userUpdateDto){
+    public ResponseEntity<UserResponseDto> updateName(@PathVariable Long idUser, @RequestBody  @Valid  UserUpdateDto userUpdateDto){
+
+        log.info("Updating name for user with id: {}", idUser);
         User user = service.updateName(idUser, userUpdateDto);
 
         return ResponseEntity.ok().body(UserMapper.toDto(user));
