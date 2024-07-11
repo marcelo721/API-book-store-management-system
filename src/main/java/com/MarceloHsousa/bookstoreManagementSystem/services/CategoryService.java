@@ -53,7 +53,7 @@ public class CategoryService {
 
     @Transactional
     public Category update(CategoryUpdateDto categoryUpdate, Long id){
-        Category category = repository.getReferenceById(id);
+        Category category = findById(id);
         updateData(categoryUpdate, category);
 
         return repository.save(category);
