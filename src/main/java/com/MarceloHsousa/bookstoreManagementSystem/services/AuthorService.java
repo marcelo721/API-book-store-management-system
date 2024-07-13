@@ -4,6 +4,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class AuthorService {
 
     private final AuthorRepository repository;
+    private final AuthorRepository authorRepository;
 
     @Transactional
     public Author insert(Author author){
@@ -40,5 +42,19 @@ public class AuthorService {
             if (!author.getBooks().isEmpty())
                 throw new IntegrityViolationException("Error, these authors are associated with some books");
             repository.deleteById(author.getId());
+    }
+
+    @Transactional
+    public Author updateAuthor(Long id, AuthorUpdateDto updateDto){
+        Author author= findById(id);
+
+        updateData(author, updateDto);
+        return authorRepository.save(author);
+    }
+
+    private void updateData(Author author, AuthorUpdateDto updateDto){
+        author.setName(updateDto.getName());
+        author.setNationality(updateDto.getNationality());
+        author.setBirthDate(updateDto.getBirthDate());
     }
 }

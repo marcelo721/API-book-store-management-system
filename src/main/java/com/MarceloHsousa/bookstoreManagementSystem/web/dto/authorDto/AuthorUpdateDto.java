@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class AuthorCreateDto {
+public class AuthorUpdateDto {
 
     @NotBlank
     private String name;

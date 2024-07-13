@@ -53,10 +53,24 @@ public class TestConfig implements CommandLineRunner {
 
         //create new author for test
         Author author = Author.builder()
-                .name("joao davi")
+                .name("George")
                 .birthDate(LocalDate.of(1977, 12, 12))
                 .nationality("alemão").build();
         authorRepository.save(author);
+
+        //create new author for test
+        Author author2 = Author.builder()
+                .name("lucas deniro")
+                .birthDate(LocalDate.of(1977, 12, 12))
+                .nationality("ingles").build();
+        authorRepository.save(author2);
+
+        //create new author for test
+        Author author3 = Author.builder()
+                .name("lucas deniro")
+                .birthDate(LocalDate.of(1977, 12, 12))
+                .nationality("ingles").build();
+        authorRepository.save(author3);
 
         //create new Book for test
         Book book = Book.builder()

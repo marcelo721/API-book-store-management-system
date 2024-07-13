@@ -1,10 +1,15 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -94,9 +99,16 @@ public class AuthorController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
             service.delete(id);
             return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto){
+
+        Author author = service.updateAuthor(id, authorUpdateDto);
+        return ResponseEntity.ok(AuthorMapper.toDto(author));
     }
 }
