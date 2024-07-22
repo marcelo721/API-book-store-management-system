@@ -50,6 +50,19 @@ public class TestConfig implements CommandLineRunner {
                 .build();
         categoryRepository.save(category2);
 
+        //create new Category for test
+        Category category3 = Category.builder()
+                .name("Terror")
+                .description("books of adventure")
+                .build();
+        categoryRepository.save(category3);
+
+        //create new Category for test
+        Category category4 = Category.builder()
+                .name("Ação")
+                .description("books of action")
+                .build();
+        categoryRepository.save(category4);
 
         //create new author for test
         Author author = Author.builder()
@@ -71,6 +84,13 @@ public class TestConfig implements CommandLineRunner {
                 .birthDate(LocalDate.of(1977, 12, 12))
                 .nationality("ingles").build();
         authorRepository.save(author3);
+
+        //create new author for test
+        Author author4 = Author.builder()
+                .name("lucas deniro")
+                .birthDate(LocalDate.of(1977, 12, 12))
+                .nationality("ingles").build();
+        authorRepository.save(author4);
 
         //create new Book for test
         Book book = Book.builder()

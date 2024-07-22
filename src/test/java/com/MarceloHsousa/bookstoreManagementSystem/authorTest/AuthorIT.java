@@ -1,7 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.authorTest;
 
 
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorUpdateDto;
@@ -170,7 +169,7 @@ public class AuthorIT {
     }
 
     @Test
-    public void deleteAuthor_withValidId_returnStatus200(){
+    public void deleteAuthor_withValidId_returnStatus204(){
         testClient
                 .delete()
                 .uri("/api/v1/authors/2")
@@ -186,7 +185,7 @@ public class AuthorIT {
     }
 
     @Test
-    public void deleteAuthor_withInvalidId_returnStatus200(){
+    public void deleteAuthor_withInvalidId_returnStatus404(){
 
         ErrorMessage responseBody = testClient
                 .delete()
@@ -202,7 +201,7 @@ public class AuthorIT {
     }
 
     @Test
-    public void deleteCategory_associatedWithOtherEntity_returnStatus409(){
+    public void deleteAuthor_associatedWithOtherEntity_returnStatus409(){
         ErrorMessage responseBody = testClient
                 .delete()
                 .uri("/api/v1/authors/1")

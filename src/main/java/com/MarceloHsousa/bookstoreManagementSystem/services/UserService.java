@@ -23,7 +23,6 @@ public class UserService {
 
     @Transactional
     public User insert(User user){
-
         try {
             return userRepository.save(user);
 

@@ -52,11 +52,18 @@ public class BookService {
 
     @Transactional(readOnly = true)
     public List<Book> findBooksByAuthor(Long id){
+
+        Author author = authorService.findById(id);
+        if (author==null)
+            throw new EntityNotFoundException("Author not found with id = " + id);
+
         return repository.findByAuthorId(id);
     }
 
     @Transactional(readOnly = true)
     public List<Book> findBooksByCategoryId(Long id){
+
+        Category category = categoryService.findById(id);
         return repository.findBooksByCategoryId(id);
     }
 
@@ -97,7 +104,7 @@ public class BookService {
     }
     @Transactional
     public Book updateBook(BookUpdateDto book, Long id){
-        Book obj = repository.getReferenceById(id);
+        Book obj = findById(id);
 
         updateData(book, obj);
         return repository.save(obj);

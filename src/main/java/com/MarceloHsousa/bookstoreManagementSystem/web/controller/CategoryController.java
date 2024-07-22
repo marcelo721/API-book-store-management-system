@@ -108,5 +108,4 @@ public class CategoryController {
         Category category = service.update(updateCategory, id);
         return ResponseEntity.ok(CategoryMapper.toDto(category));
     }
-
 }

@@ -2,15 +2,11 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseBookDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,6 +27,5 @@ public class BookCreateDto {
     @NotNull
     private Author author;
 
-    private List<Category> categories;
-
+    private List<Category> categories = new ArrayList<>();
 }

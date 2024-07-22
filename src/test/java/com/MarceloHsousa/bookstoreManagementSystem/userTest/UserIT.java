@@ -336,7 +336,7 @@ public class UserIT {
     }
 
     @Test
-    public void deleteUser_withValidId_returnStatus200(){
+    public void deleteUser_withValidId_returnStatus204(){
         testClient
                 .delete()
                 .uri("/api/v1/users/1")

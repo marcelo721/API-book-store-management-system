@@ -141,7 +141,7 @@ public class CategoryIT {
     }
 
     @Test
-    public void deleteCategory_withValidId_returnStatus200(){
+    public void deleteCategory_withValidId_returnStatus204(){
         testClient
                 .delete()
                 .uri("/api/v1/categories/1")

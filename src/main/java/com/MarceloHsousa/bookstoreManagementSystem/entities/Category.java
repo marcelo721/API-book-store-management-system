@@ -31,7 +31,7 @@ public class Category implements Serializable {
     private String description;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private Set<Book> books = new HashSet<>();
 
     @CreatedDate
