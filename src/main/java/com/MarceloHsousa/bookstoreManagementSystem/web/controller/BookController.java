@@ -42,6 +42,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity<BookResponseDto> insert(@Valid @RequestBody BookCreateDto dto) {
 
+        log.info("Insert book: {}", dto);
         Book book = service.insert(BookMapper.toBook(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(BookMapper.toDto(book));
     }
@@ -59,8 +60,9 @@ public class BookController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> findById(@PathVariable Long id) {
-        Book book = service.findById(id);
 
+        log.info("Find book with id: {}", id);
+        Book book = service.findById(id);
         return ResponseEntity.ok(BookMapper.toDto(book));
     }
 
@@ -75,8 +77,9 @@ public class BookController {
     )
     @GetMapping
     public ResponseEntity<List<BookResponseDto>> findAll() {
-        List<Book> books = service.findAll();
 
+        log.info("Finding all books");
+        List<Book> books = service.findAll();
         return ResponseEntity.ok(BookMapper.toListDto(books));
     }
 
@@ -93,8 +96,9 @@ public class BookController {
     )
     @GetMapping("/byAuthor/{id}")
     public ResponseEntity<List<BookResponseDto>> findBooksByAuthor(@PathVariable Long id) {
-        List<Book> books = service.findBooksByAuthor(id);
 
+        log.info("Find books with id author: {}", id);
+        List<Book> books = service.findBooksByAuthor(id);
         return ResponseEntity.ok(BookMapper.toListDto(books));
     }
 
@@ -110,8 +114,9 @@ public class BookController {
     )
     @GetMapping("/byCategory/{id}")
     public ResponseEntity<List<BookResponseDto>> findBooksByCategory(@PathVariable Long id) {
-        List<Book> books = service.findBooksByCategoryId(id);
 
+        log.info("Find books with id category: {}", id);
+        List<Book> books = service.findBooksByCategoryId(id);
         return ResponseEntity.ok(BookMapper.toListDto(books));
     }
 
@@ -130,8 +135,9 @@ public class BookController {
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
-            service.delete(id);
-            return ResponseEntity.noContent().build();
+        log.info("Deleting book with id: {}", id);
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(
@@ -146,10 +152,11 @@ public class BookController {
     )
     @DeleteMapping("/{bookId}/categories/{categoryId}")
     public ResponseEntity<Void> deleteCategoryFromBook(@PathVariable Long bookId, @PathVariable Long categoryId){
+
+        log.info("Deleting category from book with id: {}", categoryId);
         service.removeCategoryFromBook(categoryId, bookId);
         return ResponseEntity.noContent().build();
     }
-
 
     @Operation(
             summary = "update book", description = "Resource to update description and title from book ",
@@ -167,6 +174,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook(@PathVariable Long id, @RequestBody @Valid BookUpdateDto dto){
 
+        log.info("Updating book with id: {}", id);
         Book book = service.updateBook(dto, id);
         return ResponseEntity.ok(BookMapper.toDto(book));
     }

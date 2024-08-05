@@ -1,15 +1,11 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.authorDto.AuthorUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.AuthorMapper;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -48,6 +44,7 @@ public class AuthorController {
     @PostMapping
     public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto){
 
+        log.info("Inserting Author: {}", dto);
         Author author = service.insert(AuthorMapper.toAuthor(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(AuthorMapper.toDto(author));
     }
@@ -64,8 +61,9 @@ public class AuthorController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<AuthorResponseDto> findById(@PathVariable Long id){
-        Author author = service.findById(id);
 
+        log.info("Find Author with id: {}", id);
+        Author author = service.findById(id);
         return ResponseEntity.ok(AuthorMapper.toDto(author));
     }
 
@@ -80,8 +78,9 @@ public class AuthorController {
     )
     @GetMapping
     public ResponseEntity<List<AuthorResponseDto>> findAll(){
-        List<Author> authors = service.findAll();
 
+        log.info("Finding all Authors");
+        List<Author> authors = service.findAll();
         return ResponseEntity.ok(AuthorMapper.toListDto(authors));
     }
 
@@ -101,13 +100,16 @@ public class AuthorController {
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable  Long id){
-            service.delete(id);
-            return ResponseEntity.noContent().build();
+
+        log.info("Deleting Author with id: {}", id);
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto){
 
+        log.info("Updating Author with id: {}", id);
         Author author = service.updateAuthor(id, authorUpdateDto);
         return ResponseEntity.ok(AuthorMapper.toDto(author));
     }

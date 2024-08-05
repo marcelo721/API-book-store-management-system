@@ -46,6 +46,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponseDto> insert(@Valid @RequestBody CategoryCreateDto dto){
 
+        log.info("creating category with name : {}", dto.getName());
         Category obj = service.insert(CategoryMapper.toCategory(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CategoryMapper.toDto(obj));
     }
@@ -62,8 +63,9 @@ public class CategoryController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponseDto> findById(@PathVariable Long id) {
-        Category category = service.findById(id);
 
+        log.info("find category with id : {}", id);
+        Category category = service.findById(id);
         return ResponseEntity.ok(CategoryMapper.toDto(category));
     }
 
@@ -77,8 +79,9 @@ public class CategoryController {
     )
     @GetMapping
     public ResponseEntity<List<CategoryResponseDto>> findAll() {
-        List<Category> categories = service.findAll();
 
+        log.info("finding all categories");
+        List<Category> categories = service.findAll();
         return ResponseEntity.ok(CategoryMapper.toListDto(categories));
     }
 
@@ -98,13 +101,16 @@ public class CategoryController {
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-            service.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        log.info("deleting category with id : {}", id);
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseDto> update(@PathVariable Long id,@Valid @RequestBody CategoryUpdateDto updateCategory){
 
+        log.info("updating category with id : {}", id);
         Category category = service.update(updateCategory, id);
         return ResponseEntity.ok(CategoryMapper.toDto(category));
     }
