@@ -1,7 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
@@ -60,7 +59,8 @@ public class UserService {
             throw  new PasswordInvalidException("The password is wrong");
         }
 
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
         return user;
     }
 
