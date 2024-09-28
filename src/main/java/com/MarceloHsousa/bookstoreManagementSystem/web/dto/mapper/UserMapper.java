@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public static User toUser(UserCreateDto userCreateDto){
-
         return  new ModelMapper().map(userCreateDto, User.class);
     }
 

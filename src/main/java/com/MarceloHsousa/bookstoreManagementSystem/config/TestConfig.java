@@ -8,6 +8,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class TestConfig implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final UserService userService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -34,7 +36,7 @@ public class TestConfig implements CommandLineRunner {
                 .email("marceloHenrique@gmail.com")
                .name("marcelo henrique de sousa")
                .password("12345678").build();
-        userRepository.save(user);
+        userService.insert(user);
 
         //create new Category for test
         Category category = Category.builder()

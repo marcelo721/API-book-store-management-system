@@ -76,6 +76,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toDto(user));
     }
 
+
     @Operation(
             summary = "Find all users", description = "Resource to find all users",
             responses = {

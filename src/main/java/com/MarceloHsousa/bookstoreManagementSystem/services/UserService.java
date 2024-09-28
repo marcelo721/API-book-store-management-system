@@ -1,6 +1,7 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
@@ -9,6 +10,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordI
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +22,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User insert(User user){
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
 
         }catch (DataIntegrityViolationException e){
@@ -52,7 +56,7 @@ public class UserService {
 
         User user = findById(id);
 
-        if (!currentPassword.equals(user.getPassword())){
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())){
             throw  new PasswordInvalidException("The password is wrong");
         }
 
@@ -75,10 +79,18 @@ public class UserService {
     public User updateName(Long idUser, UserUpdateDto userUpdate){
         User user = findById(idUser);
 
-        if (!user.getPassword().equals(userUpdate.getPassword()))
+        if (!passwordEncoder.matches(userUpdate.getPassword(), user.getPassword()))
             throw new PasswordInvalidException("password is wrong!");
 
         user.setName(userUpdate.getName());
         return userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email){
+
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException("User Not Found")
+        );
     }
 }
