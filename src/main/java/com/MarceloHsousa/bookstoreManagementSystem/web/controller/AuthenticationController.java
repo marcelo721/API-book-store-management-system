@@ -25,7 +25,6 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> auth(@RequestBody UserLoginDto userLoginDto,  HttpServletRequest request){
 
         try {

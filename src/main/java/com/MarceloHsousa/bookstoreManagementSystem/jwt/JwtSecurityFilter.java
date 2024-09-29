@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtSecurityFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
@@ -30,10 +32,11 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 
         if (token!= null){
             String login = JwtUtils.isValidToken(token);
-            User user = userRepository.findByEmail(login).get();
+            User user = userRepository.findByEmail(login).orElse(null);
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.info("User authenticated: {} with roles: {}", user.getEmail(), user.getAuthorities());
         }
         filterChain.doFilter(request, response);
     }

@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,6 +69,7 @@ public class UserController {
             }
     )
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<UserResponseDto> findById( @PathVariable long id){
 
         log.info("Fetching user with id: {}", id);
@@ -86,6 +88,7 @@ public class UserController {
             }
     )
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> findAll(){
 
         log.info("Fetching all users");
@@ -108,6 +111,7 @@ public class UserController {
             }
     )
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Void> updatePassword( @PathVariable Long id,  @Valid @RequestBody UserPasswordDto user){
 
         log.info("Updating password for user with id: {}", id);
@@ -129,6 +133,7 @@ public class UserController {
             }
     )
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         log.info("Deleting user with id: {}", id);
         service.delete(id);
@@ -152,6 +157,7 @@ public class UserController {
             }
     )
     @PutMapping("/update/{idUser}")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<UserResponseDto> updateName(@PathVariable Long idUser, @RequestBody  @Valid  UserUpdateDto userUpdateDto){
 
         log.info("Updating name for user with id: {}", idUser);
