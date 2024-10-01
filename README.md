@@ -18,6 +18,7 @@ This is a Library Management API built with Spring Boot. It allows users to mana
 - **Spring Data JPA**: For database interactions.
 - **H2 Database**: In-memory database for development and testing.
 - **Lombok**: To reduce boilerplate code.
+- **Postman**: used to test application endpoints.
 
 ## Getting Started
 
@@ -26,8 +27,4 @@ This is a Library Management API built with Spring Boot. It allows users to mana
 - JDK 11 or later
 - Maven
 
-### Installation
 
-1. Build the project:
-   ```bash
-   mvn clean install
