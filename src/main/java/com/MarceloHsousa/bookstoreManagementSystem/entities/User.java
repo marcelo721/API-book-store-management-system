@@ -61,7 +61,7 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Role role = Role.CLIENT;
+    private Role role = Role.ADMIN;
 
     @Override
     public boolean equals(Object o) {

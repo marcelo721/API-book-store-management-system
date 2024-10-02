@@ -85,7 +85,6 @@ public class BookController {
         return ResponseEntity.ok(BookMapper.toListDto(books));
     }
 
-
     @Operation(
             summary = "find books by id author", description = "resource to find books by id author ",
             responses = {

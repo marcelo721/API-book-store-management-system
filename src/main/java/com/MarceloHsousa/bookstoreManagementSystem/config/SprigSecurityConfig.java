@@ -35,7 +35,7 @@ public class SprigSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.
                                 requestMatchers(HttpMethod.POST, "api/v1/users").permitAll().
-                                requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll().
+                                requestMatchers(HttpMethod.POST, "api/v1/login").permitAll().
                                 anyRequest().authenticated()
                         )
                 .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -157,7 +157,7 @@ public class UserController {
             }
     )
     @PutMapping("/update/{idUser}")
-    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #idUser == authentication.principal.id)")
     public ResponseEntity<UserResponseDto> updateName(@PathVariable Long idUser, @RequestBody  @Valid  UserUpdateDto userUpdateDto){
 
         log.info("Updating name for user with id: {}", idUser);
