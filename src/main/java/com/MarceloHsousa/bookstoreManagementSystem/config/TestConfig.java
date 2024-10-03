@@ -4,6 +4,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
@@ -37,8 +38,16 @@ public class TestConfig implements CommandLineRunner {
         User user = User.builder()
                 .email("marceloHenrique@gmail.com")
                .name("marcelo henrique de sousa")
+                .role(Role.CLIENT)
                .password("12345678").build();
         userService.insert(user);
+
+        User userAdmin = User.builder()
+                .email("admin@gmail.com")
+                .name("admin test")
+                .role(Role.ADMIN)
+                .password("12345678").build();
+        userService.insert(userAdmin);
 
         //create new Category for test
         Category category = Category.builder()
