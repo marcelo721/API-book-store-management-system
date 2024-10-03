@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,8 @@ public class BookController {
 
     @Operation(
             summary = "create a new book", description = "resource to create a new book",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "201", description = "resource created successfully",
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = BookResponseDto.class))),
@@ -52,6 +55,8 @@ public class BookController {
 
     @Operation(
             summary = "find book by id", description = "resource to find book by id ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200", description = "Book Found Successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookResponseDto.class))),
@@ -71,6 +76,8 @@ public class BookController {
 
     @Operation(
             summary = "Find all books", description = "Resource to find all books",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered users",
                             content = @Content(mediaType = "application/json",
@@ -87,6 +94,8 @@ public class BookController {
 
     @Operation(
             summary = "find books by id author", description = "resource to find books by id author ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200", description = "Books Found Successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookResponseDto.class))),
@@ -105,6 +114,8 @@ public class BookController {
 
     @Operation(
             summary = "find books by id category", description = "resource to find books by id category ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200", description = "Books Found Successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookResponseDto.class))),
@@ -123,6 +134,8 @@ public class BookController {
 
     @Operation(
             summary = "delete Book by id", description = "Resource to delete a book",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "204", description = "Book deleted successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -143,6 +156,7 @@ public class BookController {
 
     @Operation(
             summary = "delete category from book", description = "Resource to delete a category from book",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "204", description = "category deleted successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -161,6 +175,8 @@ public class BookController {
 
     @Operation(
             summary = "update book", description = "Resource to update description and title from book ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "204", description = "book updated successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),

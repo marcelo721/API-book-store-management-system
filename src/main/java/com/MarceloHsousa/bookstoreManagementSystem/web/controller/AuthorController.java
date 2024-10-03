@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,8 @@ public class AuthorController {
 
     @Operation(
             summary = "Create new Author", description = "resource to create a new author",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "201", description = "resource to create a new Category",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
@@ -53,6 +56,8 @@ public class AuthorController {
 
     @Operation(
             summary = "find author by id", description = "resource to find author by id ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200", description = "author Found Successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
@@ -72,6 +77,8 @@ public class AuthorController {
 
     @Operation(
             summary = "Find all authors", description = "Resource to find all authors",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered authors",
                             content = @Content(mediaType = "application/json",
@@ -89,6 +96,8 @@ public class AuthorController {
 
     @Operation(
             summary = "delete author by id", description = "Resource to delete a author",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "204", description = "author deleted successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -107,7 +116,6 @@ public class AuthorController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto){
 

@@ -62,7 +62,7 @@ public class AuthenticationIT {
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(400);
     }
-    
+
     @Test
     public void authenticationWithInvalidUsernameAndInvalidPassword_returnStatus422(){
 

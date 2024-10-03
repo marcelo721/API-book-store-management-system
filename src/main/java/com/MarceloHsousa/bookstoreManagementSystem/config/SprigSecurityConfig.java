@@ -27,6 +27,13 @@ public class SprigSecurityConfig {
 
     private final JwtSecurityFilter jwtSecurityFilter;
 
+    private static final String[] DOCUMENTATION_OPENAPI = {
+            "/docs/index.html",
+            "/docs-bookstore.html", "/docs/bookstore/**",
+            "/v3/api-docs/**",
+            "/swagger-ui-custom.html", "/swagger-ui.html", "/swagger-ui/**",
+            "/**.html", "/webjars/**", "/configuration/**", "/swagger-resources/**"
+    };
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
@@ -36,6 +43,7 @@ public class SprigSecurityConfig {
                         auth.
                                 requestMatchers(HttpMethod.POST, "api/v1/users").permitAll().
                                 requestMatchers(HttpMethod.POST, "api/v1/login").permitAll().
+                                requestMatchers(DOCUMENTATION_OPENAPI).permitAll().
                                 anyRequest().authenticated()
                         )
                 .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class)

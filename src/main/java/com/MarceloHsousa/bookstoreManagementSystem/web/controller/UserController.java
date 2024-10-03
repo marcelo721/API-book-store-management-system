@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,7 @@ public class UserController {
 
     @Operation(
             summary = "find User by id", description = "resource to find User by id ",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "User Found Successfully",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
@@ -81,6 +83,7 @@ public class UserController {
 
     @Operation(
             summary = "Find all users", description = "Resource to find all users",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered users",
                     content = @Content(mediaType = "application/json",
@@ -99,6 +102,7 @@ public class UserController {
 
     @Operation(
             summary = "update password", description = "resource to update password",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "204", description = "password updated successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -121,6 +125,7 @@ public class UserController {
 
     @Operation(
             summary = "delete user by id", description = "Resource to delete an user",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "204", description = "user deleted successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -143,8 +148,9 @@ public class UserController {
 
     @Operation(
             summary = "Update name", description = "resource to update username",
+            security = @SecurityRequirement(name = "security"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "resource created successfully",
+                    @ApiResponse(responseCode = "200", description = "resource updated successfully",
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = UserResponseDto.class))),
 
 

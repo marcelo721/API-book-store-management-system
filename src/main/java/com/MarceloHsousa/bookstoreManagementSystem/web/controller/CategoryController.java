@@ -7,12 +7,14 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryR
 
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,8 @@ public class CategoryController {
 
     @Operation(
             summary = "Create a new category", description = "resource to create a new Category",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "201", description = "resource created successfully",
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
@@ -55,6 +59,8 @@ public class CategoryController {
 
     @Operation(
             summary = "find category by id", description = "resource to find category by id ",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200", description = "Category Found Successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
@@ -73,6 +79,8 @@ public class CategoryController {
 
     @Operation(
             summary = "Find all categories", description = "Resource to find all categories",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered categories",
                             content = @Content(mediaType = "application/json",
@@ -90,6 +98,8 @@ public class CategoryController {
 
     @Operation(
             summary = "delete user by id", description = "Resource to delete a category",
+            security = @SecurityRequirement(name = "security"),
+
             responses = {
                     @ApiResponse(responseCode = "204", description = "category deleted successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
@@ -109,6 +119,21 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @Operation(
+            summary = "Update category", description = "resource to update category",
+            security = @SecurityRequirement(name = "security"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "resource updated successfully",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+
+                    @ApiResponse(responseCode = "422", description = "Invalid Data",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "404", description = "category Not Found",
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseDto> update(@PathVariable Long id,@Valid @RequestBody CategoryUpdateDto updateCategory){
 
