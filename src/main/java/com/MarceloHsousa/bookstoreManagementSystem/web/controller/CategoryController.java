@@ -45,7 +45,15 @@ public class CategoryController {
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid Data",
-                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
 
             }
     )
@@ -66,7 +74,15 @@ public class CategoryController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
 
                     @ApiResponse(responseCode = "404", description = "Category not found !",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping("/{id}")
@@ -84,7 +100,15 @@ public class CategoryController {
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered categories",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = CategoryResponseDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = CategoryResponseDto.class)))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping
@@ -108,7 +132,15 @@ public class CategoryController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "409", description = "this resource is associated with another resource",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @DeleteMapping("/{id}")
@@ -130,7 +162,15 @@ public class CategoryController {
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "404", description = "category Not Found",
-                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
 
             }
     )
