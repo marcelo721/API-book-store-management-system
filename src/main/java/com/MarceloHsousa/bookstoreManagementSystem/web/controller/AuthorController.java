@@ -43,7 +43,15 @@ public class AuthorController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid Data",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @PostMapping
@@ -63,7 +71,15 @@ public class AuthorController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
 
                     @ApiResponse(responseCode = "404", description = "author not found !",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping("/{id}")
@@ -82,7 +98,15 @@ public class AuthorController {
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered authors",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AuthorResponseDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = AuthorResponseDto.class)))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping
@@ -106,7 +130,15 @@ public class AuthorController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "409", description = "this resource is associated with another resource",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @DeleteMapping("/{id}")
@@ -116,6 +148,27 @@ public class AuthorController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(
+            summary = "update author by id", description = "Resource to update a author",
+            security = @SecurityRequirement(name = "security"),
+
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "author updated successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+
+                    @ApiResponse(responseCode = "404", description = "author Not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto){
 
