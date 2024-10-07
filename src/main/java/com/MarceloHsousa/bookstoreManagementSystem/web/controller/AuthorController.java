@@ -159,7 +159,7 @@ public class AuthorController {
 
                     @ApiResponse(responseCode = "404", description = "author Not found",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    
+
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
                             content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
