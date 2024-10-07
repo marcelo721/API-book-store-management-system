@@ -67,7 +67,15 @@ public class UserController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
 
                     @ApiResponse(responseCode = "404", description = "User not found !",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping("/{id}")
@@ -87,7 +95,15 @@ public class UserController {
             responses = {
                     @ApiResponse(responseCode = "200",description = "List of all registered users",
                     content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class))))
+                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDto.class)))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping
@@ -111,7 +127,15 @@ public class UserController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid data",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @PutMapping("/{id}")
@@ -134,7 +158,15 @@ public class UserController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "409", description = "this user is associated with another resource",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @DeleteMapping("/{id}")
@@ -158,7 +190,15 @@ public class UserController {
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "404", description = "User Not Found",
-                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "403",
+                            description = "This user does not have permission to access this resource",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+
+                    @ApiResponse(responseCode = "401",
+                            description = "This user is not authenticated",
+                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
 
             }
     )
