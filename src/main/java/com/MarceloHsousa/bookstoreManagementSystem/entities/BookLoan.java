@@ -1,6 +1,7 @@
 package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.LoanStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,4 +26,17 @@ public class BookLoan {
 
     @Column(name = "return_Due_Date", nullable = false)
     private LocalDate returnDueDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "loan_status", nullable = false)
+    @Builder.Default
+    private LoanStatus loanStatus = LoanStatus.ACTIVE;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "book-id", unique = true)
+    private Book book;
 }
