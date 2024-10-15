@@ -2,7 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.jwt.JwtToken;
-import com.MarceloHsousa.bookstoreManagementSystem.jwt.JwtUtils;
+import com.MarceloHsousa.bookstoreManagementSystem.util.JwtUtils;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserLoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

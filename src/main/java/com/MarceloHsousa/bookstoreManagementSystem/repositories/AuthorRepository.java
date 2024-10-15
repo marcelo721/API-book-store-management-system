@@ -1,4 +1,4 @@
-package com.MarceloHsousa.bookstoreManagementSystem.repository;
+package com.MarceloHsousa.bookstoreManagementSystem.repositories;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import org.springframework.data.jpa.repository.JpaRepository;

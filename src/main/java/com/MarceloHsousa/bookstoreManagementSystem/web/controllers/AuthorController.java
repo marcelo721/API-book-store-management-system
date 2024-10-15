@@ -1,4 +1,4 @@
-package com.MarceloHsousa.bookstoreManagementSystem.web.controller;
+package com.MarceloHsousa.bookstoreManagementSystem.web.controllers;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;

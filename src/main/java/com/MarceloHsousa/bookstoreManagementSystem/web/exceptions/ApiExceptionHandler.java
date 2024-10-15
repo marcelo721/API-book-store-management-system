@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @RestControllerAdvice
 @Slf4j
 public class ApiExceptionHandler {
@@ -127,5 +129,15 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.FORBIDDEN,"Not allowed:" + ex.getMessage()));
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ErrorMessage> SQLIntegrityConstraintViolationException( SQLIntegrityConstraintViolationException ex, HttpServletRequest request){
+
+        log.error("Api error !");
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.CONFLICT,"Conflict when inserting record: duplicate entry" + ex.getMessage()));
     }
 }

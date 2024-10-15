@@ -1,7 +1,7 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
-import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;

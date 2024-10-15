@@ -45,7 +45,7 @@ public class User implements UserDetails {
     private String email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<BookLoan> loans = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Role role = Role.CLIENT;
+    private Role role = Role.ADMIN;
 
     @Override
     public boolean equals(Object o) {

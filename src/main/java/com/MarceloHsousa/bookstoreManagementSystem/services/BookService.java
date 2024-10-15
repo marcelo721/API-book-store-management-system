@@ -3,7 +3,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.services;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
-import com.MarceloHsousa.bookstoreManagementSystem.repository.BookRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.repositories.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookUpdateDto;

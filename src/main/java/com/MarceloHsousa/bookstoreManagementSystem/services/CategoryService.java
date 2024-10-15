@@ -1,7 +1,7 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
-import com.MarceloHsousa.bookstoreManagementSystem.repository.CategoryRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.repositories.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;

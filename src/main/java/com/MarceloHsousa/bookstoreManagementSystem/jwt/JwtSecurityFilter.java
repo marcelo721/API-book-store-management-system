@@ -2,15 +2,14 @@ package com.MarceloHsousa.bookstoreManagementSystem.jwt;
 
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
-import com.MarceloHsousa.bookstoreManagementSystem.repository.UserRepository;
-import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
+import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
