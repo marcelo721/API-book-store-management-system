@@ -1,14 +1,16 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.BookLoan;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.LoanStatus;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusBook;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.BookLoanRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
+import com.MarceloHsousa.bookstoreManagementSystem.util.BookStoreUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,5 +51,20 @@ public class BookLoanService {
         Optional<BookLoan> obj = bookLoanRepository.findById(id);
 
         return obj.orElseThrow((() -> new EntityNotFoundException("loan not found")));
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * *")
+    public  void verifyLoanOverdue() {
+        LocalDate currentDate = LocalDate.now();
+        List<BookLoan> overdueLoans = bookLoanRepository.findExpiredLoans(currentDate);
+
+        for(BookLoan bookLoan : overdueLoans) {
+            bookLoan.setLoanStatus(LoanStatus.OVERDUE);
+        }
+
+        if (!overdueLoans.isEmpty()) {
+            bookLoanRepository.saveAll(overdueLoans);
+        }
     }
 }
