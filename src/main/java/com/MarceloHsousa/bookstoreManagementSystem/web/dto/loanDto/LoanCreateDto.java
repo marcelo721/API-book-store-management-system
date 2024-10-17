@@ -1,4 +1,4 @@
-package com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookLoanDto;
+package com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class BookLoanCreateDto {
+public class LoanCreateDto {
 
     @NotNull
     private User user;

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @Table(name = "book_loans")
-public class BookLoan {
+public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

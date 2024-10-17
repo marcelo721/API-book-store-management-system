@@ -1,9 +1,6 @@
-package com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookLoanDto;
+package com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseAuthorDto;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseLoanDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BookLoanResponseDto {
+public class LoanResponseDto {
 
     private Long id;
     private UserResponseLoanDto user;

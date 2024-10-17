@@ -1,6 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.repositories;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.BookLoan;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface BookLoanRepository extends JpaRepository<BookLoan, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long> {
 
-    @Query("SELECT bl FROM BookLoan bl WHERE bl.returnDueDate < :currentDate")
-    List<BookLoan> findExpiredLoans(LocalDate currentDate);
+    @Query("SELECT bl FROM Loan bl WHERE bl.returnDueDate < :currentDate")
+    List<Loan> findOverdueLoans(LocalDate currentDate);
 }
