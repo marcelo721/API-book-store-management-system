@@ -156,7 +156,7 @@ public class CategoryController {
             security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "resource updated successfully",
-                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                            content = @Content(mediaType= "application/json", schema = @Schema(implementation = CategoryResponseDto.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid Data",
                             content = @Content(mediaType= "application/json", schema = @Schema(implementation = ErrorMessage.class))),

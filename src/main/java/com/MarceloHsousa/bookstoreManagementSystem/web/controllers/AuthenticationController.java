@@ -38,7 +38,7 @@ public class AuthenticationController {
             responses = {
                     @ApiResponse(responseCode = "200",
                             description = " authentication created successfully",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = JwtToken.class))),
 
                     @ApiResponse(responseCode = "400",
                             description = "Invalid credentials",
