@@ -14,10 +14,6 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class LoanCreateDto {
-
-    @NotNull
-    private User user;
-
     @NotNull
     private Book book;
 

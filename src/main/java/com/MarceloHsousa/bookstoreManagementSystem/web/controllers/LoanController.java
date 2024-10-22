@@ -1,11 +1,11 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.controllers;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.Loan;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.services.LoanService;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.BookLoanMapper;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,13 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/bookLoans")
+@RequestMapping("api/v1/loans")
 @Slf4j
 @Tag(name = "loans", description = "contains all loans resources")
 public class LoanController {
@@ -48,10 +49,14 @@ public class LoanController {
             }
     )
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN') or #bookLoan.user.id == authentication.principal.id")
-    public ResponseEntity<LoanResponseDto> saveBookLoan(@RequestBody @Valid LoanCreateDto bookLoan) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<LoanResponseDto> saveBookLoan(@RequestBody @Valid LoanCreateDto bookLoan, Authentication authentication) {
 
-        Loan loan = service.save(BookLoanMapper.toBookLoan(bookLoan));
+        Loan loan = BookLoanMapper.toBookLoan(bookLoan);
+        loan.setUser((User) authentication.getPrincipal());
+
+        service.save(loan);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(BookLoanMapper.toDto(loan));
     }
 
@@ -101,7 +106,7 @@ public class LoanController {
             }
     )
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or #bookLoan.user.id == authentication.principal.id")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LoanResponseDto> getBookLoanById(@PathVariable Long id) {
 
         Loan bookLoan = service.findById(id);

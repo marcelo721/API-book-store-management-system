@@ -1,16 +1,16 @@
 package com.MarceloHsousa.bookstoreManagementSystem.config;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Author;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Book;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
-import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.*;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.AuthorRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.BookRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.CategoryRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
+import com.MarceloHsousa.bookstoreManagementSystem.services.LoanService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
+import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanCreateDto;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.internal.bytebuddy.asm.Advice;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,14 +24,12 @@ public class TestConfig implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
     private final BookRepository bookRepository;
     private final UserService userService;
+    private final LoanService loanService;
 
     @Override
     public void run(String... args) throws Exception {
-
-
 
         //create new User for Test
         User user = User.builder()
@@ -113,6 +111,12 @@ public class TestConfig implements CommandLineRunner {
         book.getCategories().add(category2);
         bookRepository.save(book);
 
+        //create new Loan
+        Loan loan = new Loan();
+        loan.setUser(user);
+        loan.setBook(book);
+        loan.setReturnDueDate(LocalDate.of(2025,12,12));
+        loanService.save(loan);
 
         System.out.println("Done !");
     }
