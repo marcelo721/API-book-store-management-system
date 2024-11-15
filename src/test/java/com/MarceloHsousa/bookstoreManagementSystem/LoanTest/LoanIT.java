@@ -4,7 +4,6 @@ package com.MarceloHsousa.bookstoreManagementSystem.LoanTest;
 import com.MarceloHsousa.bookstoreManagementSystem.services.BookService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
 import com.MarceloHsousa.bookstoreManagementSystem.userTest.JwtAuthentication;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;

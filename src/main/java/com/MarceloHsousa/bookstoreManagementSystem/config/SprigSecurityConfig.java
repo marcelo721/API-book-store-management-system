@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SprigSecurityConfig {
 
+
     private final JwtSecurityFilter jwtSecurityFilter;
 
     private static final String[] DOCUMENTATION_OPENAPI = {
