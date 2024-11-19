@@ -2,8 +2,10 @@ package com.MarceloHsousa.bookstoreManagementSystem.web.controllers;
 
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import com.MarceloHsousa.bookstoreManagementSystem.services.UserService;
 
+import com.MarceloHsousa.bookstoreManagementSystem.view.EmailView;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.UserMapper;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserPasswordDto;
@@ -17,17 +19,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -54,7 +59,7 @@ public class UserController {
             }
     )
     @PostMapping
-    public ResponseEntity<UserResponseDto> insert(@Valid @RequestBody UserCreateDto dto){
+    public ResponseEntity<UserResponseDto> insert(@Valid @RequestBody UserCreateDto dto) throws MessagingException, UnsupportedEncodingException {
 
         log.info("Creating new user with email: {}", dto.getEmail());
         User obj = service.insert(UserMapper.toUser(dto));
@@ -220,5 +225,18 @@ public class UserController {
         User user = service.updateName(idUser, userUpdateDto);
 
         return ResponseEntity.ok().body(UserMapper.toDto(user));
+    }
+
+
+    @GetMapping("/verify")
+    public String verifyCode(@Param("code") String code){
+
+        if (service.verify(code) == StatusAccount.ENABLED){
+            return EmailView.verifyEnabledAccount();
+        }else if (service.verify(code) == StatusAccount.ALREADY_ENABLED){
+            return EmailView.verifyAccountAlreadyEnabled();
+        } else {
+            return EmailView.reportAccountNotEnabled();
+        }
     }
 }

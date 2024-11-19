@@ -2,6 +2,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.entities;
 
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.Role;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -68,6 +69,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.ADMIN;
+
+    @Column(name = "status_account")
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private StatusAccount statusAccount = StatusAccount.DISABLED;
+
+    @Column(name = "verification_code")
+    private String verificationCode;
 
     @Override
     public boolean equals(Object o) {

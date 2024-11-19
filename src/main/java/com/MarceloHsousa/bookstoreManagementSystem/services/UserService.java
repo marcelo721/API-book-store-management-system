@@ -1,12 +1,15 @@
 package com.MarceloHsousa.bookstoreManagementSystem.services;
 
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordInvalidException;
+import com.MarceloHsousa.bookstoreManagementSystem.util.BookStoreUtils;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -15,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @Service
@@ -24,11 +27,18 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Transactional
-    public User insert(User user){
+    public User insert(User user) throws MessagingException, UnsupportedEncodingException {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            String randomCode = BookStoreUtils.generateRandomString(64);
+            user.setVerificationCode(randomCode);
+            user.setStatusAccount(StatusAccount.DISABLED);
+            emailService.sendVerifyEmail(user);
+
             return userRepository.save(user);
 
         }catch (DataIntegrityViolationException e){
@@ -94,5 +104,20 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new EntityNotFoundException("User Not Found")
         );
+    }
+
+    @Transactional()
+    public StatusAccount verify(String code) {
+        User user = userRepository.findByVerificationCode(code);
+
+        if (user == null || user.getStatusAccount().equals(StatusAccount.ENABLED)) {
+            return StatusAccount.ALREADY_ENABLED;
+
+        } else{
+            user.setVerificationCode(null);
+            user.setStatusAccount(StatusAccount.ENABLED);
+            userRepository.save(user);
+            return StatusAccount.ENABLED ;
+        }
     }
 }

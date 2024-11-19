@@ -44,6 +44,7 @@ public class SprigSecurityConfig {
                         auth.
                                 requestMatchers(HttpMethod.POST, "api/v1/users").permitAll().
                                 requestMatchers(HttpMethod.POST, "api/v1/login").permitAll().
+                                requestMatchers(HttpMethod.GET, "api/v1/users/verify").permitAll().
                                 requestMatchers(DOCUMENTATION_OPENAPI).permitAll().
                                 anyRequest().authenticated()
                         )
