@@ -4,6 +4,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Loan;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.loanDto.LoanResponseDto;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class BookLoanMapper {
         return new ModelMapper().map(loan,  LoanResponseDto.class);
     }
 
-    public static List<LoanResponseDto> toListDto(List<Loan> bookLoans){
-        return bookLoans.stream().map(BookLoanMapper::toDto).collect(Collectors.toList());
+    public static Page<LoanResponseDto> toPageDto(Page<Loan> bookLoans){
+        return bookLoans.map(BookLoanMapper::toDto);
     }
 }

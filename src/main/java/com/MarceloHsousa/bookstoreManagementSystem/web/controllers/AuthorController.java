@@ -17,6 +17,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,19 +46,19 @@ public class AuthorController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorResponseDto.class))),
 
                     @ApiResponse(responseCode = "422", description = "Invalid Data",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "401",
                             description = "This user is not authenticated",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @PostMapping
-    public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto){
+    public ResponseEntity<AuthorResponseDto> insert(@Valid @RequestBody AuthorCreateDto dto) {
 
         log.info("Inserting Author: {}", dto);
         Author author = service.insert(AuthorMapper.toAuthor(dto));
@@ -75,15 +78,15 @@ public class AuthorController {
 
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "401",
                             description = "This user is not authenticated",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorResponseDto> findById(@PathVariable Long id){
+    public ResponseEntity<AuthorResponseDto> findById(@PathVariable Long id) {
 
         log.info("Find Author with id: {}", id);
         Author author = service.findById(id);
@@ -96,25 +99,32 @@ public class AuthorController {
             security = @SecurityRequirement(name = "security"),
 
             responses = {
-                    @ApiResponse(responseCode = "200",description = "List of all registered authors",
+                    @ApiResponse(responseCode = "200", description = "List of all registered authors",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = AuthorResponseDto.class)))),
 
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "401",
                             description = "This user is not authenticated",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping
-    public ResponseEntity<List<AuthorResponseDto>> findAll(){
+    public ResponseEntity<Page<AuthorResponseDto>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+    ) {
+
+        PageRequest request = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy );
 
         log.info("Finding all Authors");
-        List<Author> authors = service.findAll();
-        return ResponseEntity.ok(AuthorMapper.toListDto(authors));
+        Page<Author> authors = service.findAll(request);
+        return ResponseEntity.ok(AuthorMapper.toPageDto(authors));
     }
 
 
@@ -134,15 +144,15 @@ public class AuthorController {
 
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "401",
                             description = "This user is not authenticated",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable  Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
         log.info("Deleting Author with id: {}", id);
         service.delete(id);
@@ -162,15 +172,15 @@ public class AuthorController {
 
                     @ApiResponse(responseCode = "403",
                             description = "This user does not have permission to access this resource",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
 
                     @ApiResponse(responseCode = "401",
                             description = "This user is not authenticated",
-                            content =  @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto){
+    public ResponseEntity<AuthorResponseDto> update(@PathVariable Long id, @Valid @RequestBody AuthorUpdateDto authorUpdateDto) {
 
         log.info("Updating Author with id: {}", id);
         Author author = service.updateAuthor(id, authorUpdateDto);

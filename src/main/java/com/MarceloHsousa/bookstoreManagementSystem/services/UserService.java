@@ -9,6 +9,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordI
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +44,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public Page<User> findAll(PageRequest request){
+        return userRepository.findAll(request);
     }
 
     @Transactional

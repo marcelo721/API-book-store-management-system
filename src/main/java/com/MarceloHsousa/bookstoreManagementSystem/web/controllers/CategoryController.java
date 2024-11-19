@@ -7,7 +7,6 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryR
 
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.mapper.CategoryMapper;
-import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,6 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -112,10 +114,17 @@ public class CategoryController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<CategoryResponseDto>> findAll() {
+    public ResponseEntity<Page<CategoryResponseDto>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12")Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name")String orderBy
+            ) {
+
+        PageRequest request = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy );
 
         log.info("finding all categories");
-        List<Category> categories = service.findAll();
+        Page<Category> categories = service.findAllPaged(request);
         return ResponseEntity.ok(CategoryMapper.toListDto(categories));
     }
 

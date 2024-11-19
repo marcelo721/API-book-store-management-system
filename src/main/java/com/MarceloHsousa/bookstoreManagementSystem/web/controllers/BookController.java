@@ -16,6 +16,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -109,11 +112,18 @@ public class BookController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<BookResponseDto>> findAll() {
+    public ResponseEntity<Page<BookResponseDto>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12")Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name")String orderBy
+    ) {
+
+        PageRequest request = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy );
 
         log.info("Finding all books");
-        List<Book> books = service.findAll();
-        return ResponseEntity.ok(BookMapper.toListDto(books));
+        Page<Book> books = service.findAll(request);
+        return ResponseEntity.ok(BookMapper.toPageDto(books));
     }
 
     @Operation(

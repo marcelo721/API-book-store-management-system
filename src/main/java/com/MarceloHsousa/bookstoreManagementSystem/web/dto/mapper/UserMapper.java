@@ -6,6 +6,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseD
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.boot.context.properties.PropertyMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class UserMapper {
 
     }
 
-    public static List<UserResponseDto> toListDto(List <User> users){
-        return users.stream().map(user -> toDto(user)).collect(Collectors.toList());
+    public static Page<UserResponseDto> toListDto(Page<User> users){
+        return users.map(UserMapper::toDto);
     }
 }

@@ -4,6 +4,7 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.Category;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryResponseDto;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class CategoryMapper {
         return new ModelMapper().map(category, CategoryResponseDto.class);
     }
 
-    public static List<CategoryResponseDto> toListDto(List<Category> categories){
-        return categories.stream().map(CategoryMapper::toDto).collect(Collectors.toList());
+    public static Page<CategoryResponseDto> toListDto(Page<Category> categories){
+        return categories.map(CategoryMapper::toDto);
     }
 }

@@ -9,6 +9,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusBook;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.LoanRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +43,8 @@ public class LoanService {
     }
 
     @Transactional(readOnly = true)
-    public List<Loan> findAll() {
-        return bookLoanRepository.findAll();
+    public Page<Loan> findAll(PageRequest request) {
+        return bookLoanRepository.findAll(request);
     }
 
     @Transactional(readOnly = true)

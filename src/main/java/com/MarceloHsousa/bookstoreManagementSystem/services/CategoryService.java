@@ -7,6 +7,8 @@ import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.Integrity
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.CategoryDto.CategoryUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +64,9 @@ public class CategoryService {
     private void updateData(CategoryUpdateDto categoryUpdate, Category category) {
         category.setDescription(categoryUpdate.getDescription());
         category.setName(categoryUpdate.getName());
+    }
+
+    public Page<Category> findAllPaged(PageRequest request) {
+        return repository.findAll(request);
     }
 }
