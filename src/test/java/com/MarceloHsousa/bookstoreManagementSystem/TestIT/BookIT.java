@@ -1,8 +1,8 @@
-package com.MarceloHsousa.bookstoreManagementSystem.BookTest;
+package com.MarceloHsousa.bookstoreManagementSystem.TestIT;
 
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthorService;
 import com.MarceloHsousa.bookstoreManagementSystem.services.CategoryService;
-import com.MarceloHsousa.bookstoreManagementSystem.userTest.JwtAuthentication;
+import com.MarceloHsousa.bookstoreManagementSystem.TestIT.userTest.JwtAuthentication;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookCreateDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.bookDto.BookUpdateDto;
