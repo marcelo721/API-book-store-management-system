@@ -3,10 +3,7 @@ package com.MarceloHsousa.bookstoreManagementSystem.services;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordInvalidException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.*;
 import com.MarceloHsousa.bookstoreManagementSystem.util.BookStoreUtils;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserUpdateDto;
 import jakarta.mail.MessagingException;
@@ -50,7 +47,14 @@ public class UserService {
     public User findById(long id){
 
         Optional<User> obj = userRepository.findById(id);
-        return obj.orElseThrow((()-> new EntityNotFoundException("User Not Found")));
+        return userRepository.findById(id)
+                .map(user -> {
+                    if (user.getStatusAccount() == StatusAccount.DISABLED) {
+                        throw new UserAccountNotEnabledException("Account not enabled");
+                    }
+                    return user;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
     @Transactional(readOnly = true)

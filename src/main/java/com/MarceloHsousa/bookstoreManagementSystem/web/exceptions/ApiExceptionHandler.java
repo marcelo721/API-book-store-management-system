@@ -1,9 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.exceptions;
 
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EmailUniqueViolationException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.EntityNotFoundException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.IntegrityViolationException;
-import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.PasswordInvalidException;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.*;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -139,5 +136,15 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.CONFLICT,"Conflict when inserting record: duplicate entry" + ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserAccountNotEnabledException.class)
+    public ResponseEntity<ErrorMessage> UserAccountNotEnabledException( UserAccountNotEnabledException ex, HttpServletRequest request){
+
+        log.error("Api error !");
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, ex.getMessage()));
     }
 }

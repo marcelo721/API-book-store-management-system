@@ -12,6 +12,6 @@ public class UserRepositoryTests {
     private UserRepository userRepository;
 
     @Test
-    public void deleteUserShouldWhenIdExists(){
+    public void deleteUserShouldDeletedUserWhenIdExists(){
     }
 }

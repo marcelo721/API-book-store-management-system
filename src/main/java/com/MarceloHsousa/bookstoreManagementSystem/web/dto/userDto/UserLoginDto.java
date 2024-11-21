@@ -1,5 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto;
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -20,4 +21,5 @@ public class UserLoginDto {
     @NotBlank
     @Size(min = 8, max = 8)
     private String password;
+
 }

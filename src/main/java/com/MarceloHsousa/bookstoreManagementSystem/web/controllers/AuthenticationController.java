@@ -1,8 +1,12 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.controllers;
 
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
+import com.MarceloHsousa.bookstoreManagementSystem.entities.enums.StatusAccount;
 import com.MarceloHsousa.bookstoreManagementSystem.jwt.JwtToken;
+import com.MarceloHsousa.bookstoreManagementSystem.repositories.UserRepository;
 import com.MarceloHsousa.bookstoreManagementSystem.services.AuthenticationService;
+import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.UserAccountNotEnabledException;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserLoginDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.dto.userDto.UserResponseDto;
 import com.MarceloHsousa.bookstoreManagementSystem.web.exceptions.ErrorMessage;
@@ -22,6 +26,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/v1/login")
 @Slf4j
@@ -31,6 +37,7 @@ public class AuthenticationController {
 
     private final  AuthenticationManager authenticationManager;
     private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
     @Operation(
             summary = "authenticate to api",
@@ -51,6 +58,10 @@ public class AuthenticationController {
     )
     @PostMapping
     public ResponseEntity<?> auth(@RequestBody @Valid UserLoginDto userLoginDto, HttpServletRequest request){
+
+        User user = userRepository.findByEmail(userLoginDto.getEmail()).get();
+        if (user.getStatusAccount() == StatusAccount.DISABLED)
+            throw new UserAccountNotEnabledException("account not enabled!");
 
         try {
             var userAuthenticationToken = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
