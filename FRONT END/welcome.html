@@ -9,8 +9,31 @@
 <body>
     <div class="welcome-container">
         <h1>Bem-vindo à Livraria!</h1>
-        <p>Olá, você está logado com sucesso.</p>
-        <a href="index.html">Voltar para o login</a>
+        <p>Você está logado com sucesso.</p>
+        <button id="logoutButton">Logout</button>
     </div>
+    <script>
+        // Função para verificar o token
+        function checkToken() {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("Você precisa estar logado para acessar esta página!");
+                window.location.href = "index.html"; // Redireciona para a tela de login
+            }
+        }
+
+        // Função de logout
+        function logout() {
+            localStorage.removeItem("authToken"); // Remove o token
+            alert("Você saiu com sucesso!");
+            window.location.href = "index.html"; // Redireciona para a tela de login
+        }
+
+        // Executa a verificação do token ao carregar a página
+        checkToken();
+
+        // Evento de logout
+        document.getElementById("logoutButton").addEventListener("click", logout);
+    </script>
 </body>
 </html>

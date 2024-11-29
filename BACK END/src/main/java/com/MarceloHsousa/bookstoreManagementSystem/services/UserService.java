@@ -47,14 +47,8 @@ public class UserService {
     public User findById(long id){
 
         Optional<User> obj = userRepository.findById(id);
-        return userRepository.findById(id)
-                .map(user -> {
-                    if (user.getStatusAccount() == StatusAccount.DISABLED) {
-                        throw new UserAccountNotEnabledException("Account not enabled");
-                    }
-                    return user;
-                })
-                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        return userRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
     @Transactional(readOnly = true)

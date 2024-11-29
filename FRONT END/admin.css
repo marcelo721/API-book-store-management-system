@@ -1,0 +1,190 @@
+/* Geral */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c2a48; /* Fundo escuro e suave */
+    color: #e5e7eb; /* Texto claro */
+}
+
+/* Container principal */
+.admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    background-color: #2d3748; /* Fundo escuro do painel */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombras mais profundas */
+    transition: box-shadow 0.3s ease;
+}
+
+/* Efeito de hover no painel */
+.admin-dashboard:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Cabeçalho */
+.admin-header {
+    background-color: #374151; /* Azul escuro para cabeçalho */
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.admin-header h1 {
+    font-size: 1.75rem;
+    margin: 0;
+    color: #63b3ed; /* Azul claro para título */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Nome do administrador */
+.admin-header .admin-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.admin-header .admin-name span {
+    color: #e5e7eb; /* Cor clara para o nome */
+}
+
+/* Área principal */
+.admin-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+/* Seções */
+.form-section {
+    background-color: #374151; /* Azul escuro para o fundo da seção */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título das seções */
+.form-section h2 {
+    color: #63b3ed; /* Azul claro */
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Campos de formulário */
+.input-group {
+    margin-bottom: 1.25rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #e5e7eb; /* Cor do label */
+}
+
+/* Estilo dos inputs */
+.input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #4A5568; /* Borda cinza escura */
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #2d3748; /* Fundo escuro para inputs */
+    color: #e5e7eb; /* Cor do texto */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efeito de foco nos inputs */
+.input-group input:focus {
+    border-color: #63b3ed; /* Azul claro no foco */
+    outline: none;
+    box-shadow: 0 0 8px rgba(99, 179, 237, 0.6); /* Efeito de brilho no foco */
+}
+
+/* Botões */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #4CAF50; /* Cor verde do botão */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn:hover {
+    background-color: #45a049; /* Efeito hover mais escuro */
+    transform: scale(1.05); /* Leve aumento ao passar o mouse */
+}
+
+/* Botão secundário */
+.btn-secondary {
+    background-color: #388e3c; /* Verde mais escuro */
+    
+}
+
+.btn-secondary:hover {
+    background-color: #2e7d32; /* Efeito hover no botão secundário */
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    padding: 1rem;
+    border-bottom: 1px solid #4A5568; /* Borda cinza escura */
+    background-color: #374151; /* Fundo escuro para itens da lista */
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito hover na lista */
+ul li:hover {
+    background-color: #2d3748; /* Efeito de hover mais escuro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efeito de sombra no hover */
+}
+
+/* Título dos itens da lista */
+ul li span {
+    font-weight: bold;
+    color: #63b3ed; /* Azul claro para destaque */
+}
+
+/* Descrição dos itens da lista */
+ul li p {
+    margin: 0;
+    color: #e5e7eb; /* Texto mais suave */
+}
+
+/* Detalhes dos itens */
+ul li .category-item h3,
+ul li .author-item h3,
+ul li .book-item h3 {
+    font-size: 1.2rem;
+    color: #388e3c; /* Verde escuro */
+    margin-bottom: 0.5rem;
+}
+
+.inputForm{
+   margin-top: 20px; 
+}
