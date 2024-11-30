@@ -1,5 +1,6 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.exceptions;
 
+import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.*;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @Slf4j
@@ -138,13 +140,25 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.CONFLICT,"Conflict when inserting record: duplicate entry" + ex.getMessage()));
     }
 
-    @ExceptionHandler(UserAccountNotEnabledException.class)
-    public ResponseEntity<ErrorMessage> UserAccountNotEnabledException( UserAccountNotEnabledException ex, HttpServletRequest request){
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErrorMessage> NoSuchElementException( NoSuchElementException ex, HttpServletRequest request){
 
         log.error("Api error !");
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, ex.getMessage()));
+                .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage() + " Esse usuário existe"));
     }
+
+    @ExceptionHandler(UserAccountNotEnabledException.class)
+    public ResponseEntity<ErrorMessage>UserAccountNotEnabledException (UserAccountNotEnabledException ex, HttpServletRequest request){
+
+        log.error("Api error !");
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+
 }
