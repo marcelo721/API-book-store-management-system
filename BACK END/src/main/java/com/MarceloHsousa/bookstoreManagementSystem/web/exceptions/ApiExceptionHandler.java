@@ -1,6 +1,5 @@
 package com.MarceloHsousa.bookstoreManagementSystem.web.exceptions;
 
-import com.MarceloHsousa.bookstoreManagementSystem.entities.User;
 import com.MarceloHsousa.bookstoreManagementSystem.services.exceptions.*;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import jakarta.servlet.http.HttpServletRequest;
